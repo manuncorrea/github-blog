@@ -1,5 +1,11 @@
 import { Profolie } from '../../components/Profile'
+import { SearchFomr } from '../../components/SearchForm'
 
 export function Home() {
-  return <Profolie />
+  return (
+    <div className="container">
+      <Profolie />
+      <SearchFomr />
+    </div>
+  )
 }

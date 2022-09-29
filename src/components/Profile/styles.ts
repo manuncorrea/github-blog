@@ -48,7 +48,7 @@ export const ProfolieContainer = styled.div`
         align-items: center;
 
         color: ${(props) => props.theme.blue};
-        font-size: 1rem;
+        font-size: 0.75rem;
         font-weight: bold;
         text-decoration: none;
 

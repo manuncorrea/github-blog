@@ -15,7 +15,7 @@ export function Profolie() {
         <header>
           <h2>Emanuele Correa</h2>
           <a href="" target={'_blank'}>
-            <span>Github</span>
+            <span>GiTHUB</span>
             <BsBoxArrowUpRight />
           </a>
         </header>

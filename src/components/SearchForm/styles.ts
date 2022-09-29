@@ -4,7 +4,7 @@ export const SearchFormContainer = styled.form`
   width: 100%;
   max-width: 864px;
   margin: 0 auto;
-  margin-top: 12.8125rem;
+  margin-top: 12rem;
 
   header {
     display: flex;
@@ -32,6 +32,7 @@ export const SearchFormContainer = styled.form`
     padding: 0.75rem 1rem;
 
     background: ${(props) => props.theme['base-input']};
+    color: ${(props) => props.theme['base-text']};
 
     width: 54rem;
     height: 3.125rem;

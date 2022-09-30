@@ -1,40 +1,65 @@
+import { useCallback, useEffect, useState } from 'react'
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 import { FaGithub, FaUserFriends } from 'react-icons/fa'
+import { api } from '../../lib/axios'
 import { ProfolieContainer } from './styles'
 
+interface ProfolieProps {
+  avatarUrl: string
+  htmlUrl: string
+  name: string
+  bio: string
+  login: string
+  followers: number
+}
+
 export function Profolie() {
+  const [profolie, setProfolie] = useState<ProfolieProps>()
+
+  const fecthProfile = useCallback(async () => {
+    const response = await api.get('users/manuncorrea')
+    const {
+      avatar_url: avatarUrl,
+      html_url: htmlUrl,
+      name,
+      bio,
+      login,
+      followers,
+    } = response.data
+
+    setProfolie({ avatarUrl, htmlUrl, name, bio, login, followers })
+  }, [])
+
+  useEffect(() => {
+    fecthProfile()
+  }, [fecthProfile])
+
+  console.log(profolie?.avatarUrl)
+
   return (
     <ProfolieContainer>
-      <img
-        src="https://avatars.githubusercontent.com/u/15049865?v=4"
-        alt=""
-        srcSet=""
-      />
-
+      <img src={profolie?.avatarUrl} alt="" srcSet="" />
       <div>
         <header>
-          <h2>Emanuele Correa</h2>
-          <a href="" target={'_blank'}>
+          <h2>{profolie?.name}</h2>
+          <a href={profolie?.htmlUrl} target={'_blank'} rel="noreferrer">
             <span>GiTHUB</span>
             <BsBoxArrowUpRight />
           </a>
         </header>
-        <p>
-          Olá meu nome é Emanuele, tenho 28 anos e sou formada em Ciências da
-          Computação. Dev Full Stack Júnior
-        </p>
+        <p>{profolie?.bio}</p>
 
         <ul>
           <li>
             <span>
               <FaGithub />
-              manuncorre
+              {profolie?.login}
             </span>
           </li>
           <li>
             <span>
               <FaUserFriends />
-              60 seguidores
+              {profolie?.followers} seguidores
             </span>
           </li>
         </ul>

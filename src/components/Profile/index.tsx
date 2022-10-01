@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 import { FaGithub, FaUserFriends } from 'react-icons/fa'
+import { Environment } from '../../environment'
 import { api } from '../../lib/axios'
 import { ProfolieContainer } from './styles'
 
@@ -13,11 +14,13 @@ interface ProfolieProps {
   followers: number
 }
 
+const username = Environment.GITHUB_USERNAME
+
 export function Profolie() {
   const [profolie, setProfolie] = useState<ProfolieProps>()
 
   const fecthProfile = useCallback(async () => {
-    const response = await api.get('users/manuncorrea')
+    const response = await api.get(`users/${username}`)
     const {
       avatar_url: avatarUrl,
       html_url: htmlUrl,

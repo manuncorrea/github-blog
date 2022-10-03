@@ -1,31 +1,49 @@
+import { useCallback, useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import { useParams } from 'react-router-dom'
 import { PostInfo } from '../../components/PostInfo'
+import { Environment } from '../../environment'
+import { api } from '../../lib/axios'
 import { ProfileContainer } from './styles'
 
+interface PostsProps {
+  title: string
+  html_url: string
+  comments: number
+  created_at: string
+  body: string
+  user: {
+    login: string
+  }
+}
+
+const username = Environment.GITHUB_USERNAME
+const repository = Environment.GITHUB_REPOSITORY
+
 export function Posts() {
+  const { id } = useParams()
+  const [post, setPost] = useState<PostsProps>({} as PostsProps)
+
+  const getPost = useCallback(async () => {
+    const response = await api.get(
+      `repos/${username}/${repository}/issues/${id}`,
+    )
+
+    setPost(response.data)
+  }, [id])
+
+  useEffect(() => {
+    getPost()
+  }, [getPost])
+
   return (
     <>
       <div className="container">
-        <PostInfo />
+        <PostInfo post={post} />
       </div>
 
       <ProfileContainer className="container">
-        <p>
-          Programming languages all have built-in data structures, but these
-          often differ from one language to another. This article attempts to
-          list the built-in data structures available in JavaScript and what
-          properties they have. These can be used to build other data
-          structures. Wherever possible, comparisons with other languages are
-          drawn.
-        </p>
-        <a href="">Dynamic typing </a>
-        <p>
-          JavaScript is a loosely typed and dynamic language. Variables in
-          JavaScript are not directly associated with any particular value type,
-          and any variable can be assigned (and re-assigned) values of all
-          types:
-        </p>
-
-        <code>let foo = 42;</code>
+        <ReactMarkdown>{post.body}</ReactMarkdown>
       </ProfileContainer>
     </>
   )

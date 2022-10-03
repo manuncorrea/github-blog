@@ -1,9 +1,23 @@
+import { formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/esm/locale/pt-BR/index.js'
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 import { FaCalendar, FaChevronLeft, FaComment, FaGithub } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { PostInfoContainer } from './styles'
 
-export function PostInfo() {
+interface PostInfoProps {
+  post: {
+    title: string
+    html_url: string
+    comments: number
+    created_at: string
+    user: {
+      login: string
+    }
+  }
+}
+
+export function PostInfo({ post }: PostInfoProps) {
   return (
     <PostInfoContainer>
       <header>
@@ -11,26 +25,32 @@ export function PostInfo() {
           <FaChevronLeft />
           VOLTAR
         </Link>
-        <a>
+        <a href={post?.html_url}>
           VER NO GITHUB
           <BsBoxArrowUpRight />
         </a>
       </header>
 
-      <p>JavaScript data types and data structures</p>
+      <p>{post?.title}</p>
 
       <ul>
         <li>
           <FaGithub />
-          <span> manuncorrea</span>
+          <span>{post?.user.login}</span>
         </li>
         <li>
           <FaCalendar />
-          <span>Há 1 dia</span>
+          <span>
+            {post?.created_at &&
+              formatDistanceToNow(new Date(post?.created_at), {
+                locale: ptBR,
+                addSuffix: true,
+              })}
+          </span>
         </li>
         <li>
           <FaComment />
-          <span>5 comentários</span>
+          <span>{post?.comments} comentários</span>
         </li>
       </ul>
     </PostInfoContainer>

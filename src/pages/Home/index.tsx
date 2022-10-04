@@ -24,16 +24,13 @@ const repository = Environment.GITHUB_REPOSITORY
 export function Home() {
   const [posts, setPosts] = useState<PostHomeProps[]>([])
 
-  const getPosts = useCallback(
-    async (query: string = '') => {
-      const getParameter = query
-        ? `/search/issues?q=${query}%20repo:${username}/${repository}`
-        : `/search/issues?q=%20repo:${username}/${repository}`
-      const response = await api.get(getParameter)
-      setPosts(response.data.items)
-    },
-    [posts],
-  )
+  const getPosts = useCallback(async (query: string = '') => {
+    const getParameter = query
+      ? `/search/issues?q=${query}%20repo:${username}/${repository}`
+      : `/search/issues?q=%20repo:${username}/${repository}`
+    const response = await api.get(getParameter)
+    setPosts(response.data.items)
+  }, [])
 
   useEffect(() => {
     getPosts()

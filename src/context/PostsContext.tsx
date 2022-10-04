@@ -1,45 +1,55 @@
-import React, { useCallback, useState } from 'react'
-import { ReactNode } from 'react-markdown/lib/react-markdown'
-import { Environment } from '../environment'
-import { api } from '../lib/axios'
+import React, { ReactNode } from 'react'
+import { apiPosts } from '../lib/axios'
 
-interface PostProps {
-  number: number
-  tilte: string
-  created_at: string
+interface Post {
+  title: string
   body: string
+  created_at: string
+  number: number
 }
 
-interface PostsContextType {
-  posts: PostProps[] | undefined
-  fetchPosts: (query?: string) => void
+interface PostContextType {
+  posts: Post[] | undefined
+  searchPosts: (query?: string) => void
 }
 
-interface PostsContextProviderProps {
+interface PostContextProvider {
   children: ReactNode
 }
 
-const username = Environment.GITHUB_USERNAME
-const repository = Environment.GITHUB_REPOSITORY
+export const PostsContext = React.createContext({} as PostContextType)
 
-export const PostsContext = React.createContext({} as PostsContextType)
+export const PostsContextProvider = ({ children }: PostContextProvider) => {
+  const [posts, setPosts] = React.useState<Post[]>()
 
-export function PostsContextProvider({ children }: PostsContextProviderProps) {
-  const [posts, setPosts] = useState<PostProps[]>()
-
-  const fetchPosts = useCallback(async (query?: string) => {
-    const response = await api.get(
-      `/search/issues?q=${query}%20label:published%20repo:${username}/${repository}`,
-      {
-        params: {
-          q: query,
-        },
+  async function searchPosts(query?: string) {
+    const url =
+      query === undefined
+        ? 'repo:manuncorrea/github-blog'
+        : `${query}repo:manuncorrea/github-blog`
+    const response = await apiPosts.get('', {
+      params: {
+        q: url,
       },
-    )
-    setPosts(response.data)
+    })
+
+    const postsResp: Post[] = response.data.items.map((post: any) => {
+      return {
+        title: post.title,
+        created_at: post.created_at,
+        body: post.body,
+        number: post.number,
+      }
+    })
+    setPosts([...postsResp])
+  }
+
+  React.useEffect(() => {
+    searchPosts()
   }, [])
+
   return (
-    <PostsContext.Provider value={{ posts, fetchPosts }}>
+    <PostsContext.Provider value={{ posts, searchPosts }}>
       {children}
     </PostsContext.Provider>
   )

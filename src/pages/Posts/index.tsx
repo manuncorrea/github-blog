@@ -2,11 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
 import { PostInfo } from '../../components/PostInfo'
-import { Environment } from '../../environment'
 import { api } from '../../lib/axios'
 import { ProfileContainer } from './styles'
 
-interface PostsProps {
+interface PostProps {
   title: string
   html_url: string
   comments: number
@@ -17,24 +16,23 @@ interface PostsProps {
   }
 }
 
-const username = Environment.GITHUB_USERNAME
-const repository = Environment.GITHUB_REPOSITORY
-
 export function Posts() {
-  const { id } = useParams()
-  const [post, setPost] = useState<PostsProps>({} as PostsProps)
+  const params = useParams()
+  const [post, setPost] = useState<PostProps>({} as PostProps)
 
   const getPost = useCallback(async () => {
     const response = await api.get(
-      `repos/${username}/${repository}/issues/${id}`,
+      `repos/manuncorrea/github-blog/issues/${params.number}`,
     )
 
     setPost(response.data)
-  }, [id])
+  }, [params.number])
 
   useEffect(() => {
     getPost()
   }, [getPost])
+
+  console.log(post)
 
   return (
     <>

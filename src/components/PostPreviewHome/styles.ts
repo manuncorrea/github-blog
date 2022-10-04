@@ -4,7 +4,7 @@ export const PostHomeContainer = styled.button`
   width: 100%;
   max-width: 26rem;
   height: 16.25rem;
-
+  overflow: hidden;
   border: 0;
   border: 2px solid transparent;
 
@@ -41,6 +41,8 @@ export const PostHomeContainer = styled.button`
   }
 
   p {
+    max-height: 7rem;
     color: ${(props) => props.theme['base-text']};
+    overflow: hidden;
   }
 `

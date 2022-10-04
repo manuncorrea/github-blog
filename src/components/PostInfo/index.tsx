@@ -3,7 +3,7 @@ import ptBR from 'date-fns/esm/locale/pt-BR/index.js'
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 import { FaCalendar, FaChevronLeft, FaComment, FaGithub } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { PostData } from '../../pages/Posts'
+import { PostData } from '../../interface/PostsData'
 import { PostInfoContainer } from './styles'
 interface PostInfoProps {
   post: PostData

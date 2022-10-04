@@ -3,26 +3,15 @@ import { PostPreviewHome } from '../../components/PostPreviewHome'
 import { Profolie } from '../../components/Profile'
 import { SearchFomr } from '../../components/SearchForm'
 import { Environment } from '../../environment'
+import { PostData } from '../../interface/PostsData'
 import { api } from '../../lib/axios'
 import { PostContent } from './styled'
-
-export interface PostHomeProps {
-  title: string
-  body: string
-  created_at: string
-  number: number
-  html_url: string
-  comments: number
-  user: {
-    login: string
-  }
-}
 
 const username = Environment.GITHUB_USERNAME
 const repository = Environment.GITHUB_REPOSITORY
 
 export function Home() {
-  const [posts, setPosts] = useState<PostHomeProps[]>([])
+  const [posts, setPosts] = useState<PostData[]>([])
 
   const getPosts = useCallback(async (query: string = '') => {
     const getParameter = query

@@ -1,10 +1,10 @@
 import { formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/esm/locale/pt-BR/index.js'
-import { PostHomeProps } from '../../pages/Home'
+import { PostData } from '../../interface/PostsData'
 import { PostHomeContainer } from './styles'
 
 interface PostProps {
-  posts: PostHomeProps
+  posts: PostData
 }
 
 export function PostPreviewHome({ posts }: PostProps) {

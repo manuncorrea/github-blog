@@ -3,20 +3,9 @@ import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
 import { PostInfo } from '../../components/PostInfo'
 import { Environment } from '../../environment'
+import { PostData } from '../../interface/PostsData'
 import { api } from '../../lib/axios'
 import { ProfileContainer } from './styles'
-
-interface PostData {
-  html_url: string
-  number: number
-  title: string
-  body: string
-  created_at: string
-  comments: number
-  user: {
-    login: string
-  }
-}
 
 const username = Environment.GITHUB_USERNAME
 const repository = Environment.GITHUB_REPOSITORY

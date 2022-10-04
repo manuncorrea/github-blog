@@ -37,8 +37,6 @@ export function Profolie() {
     fecthProfile()
   }, [fecthProfile])
 
-  console.log(profolie?.avatarUrl)
-
   return (
     <ProfolieContainer>
       <img src={profolie?.avatarUrl} alt="" srcSet="" />

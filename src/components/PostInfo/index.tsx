@@ -3,18 +3,10 @@ import ptBR from 'date-fns/esm/locale/pt-BR/index.js'
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 import { FaCalendar, FaChevronLeft, FaComment, FaGithub } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { PostData } from '../../pages/Posts'
 import { PostInfoContainer } from './styles'
-
 interface PostInfoProps {
-  post: {
-    title: string
-    html_url: string
-    comments: number
-    created_at: string
-    user: {
-      login: string
-    }
-  }
+  post: PostData
 }
 
 export function PostInfo({ post }: PostInfoProps) {
@@ -25,7 +17,7 @@ export function PostInfo({ post }: PostInfoProps) {
           <FaChevronLeft />
           VOLTAR
         </Link>
-        <a href={post?.html_url}>
+        <a href={post.html_url}>
           VER NO GITHUB
           <BsBoxArrowUpRight />
         </a>
@@ -36,7 +28,7 @@ export function PostInfo({ post }: PostInfoProps) {
       <ul>
         <li>
           <FaGithub />
-          <span>{post?.user.login}</span>
+          <span>manuncorrea</span>
         </li>
         <li>
           <FaCalendar />

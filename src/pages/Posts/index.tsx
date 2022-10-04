@@ -2,46 +2,50 @@ import { useCallback, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
 import { PostInfo } from '../../components/PostInfo'
+import { Environment } from '../../environment'
 import { api } from '../../lib/axios'
 import { ProfileContainer } from './styles'
 
-interface PostProps {
-  title: string
+interface PostData {
   html_url: string
-  comments: number
-  created_at: string
+  number: number
+  title: string
   body: string
+  created_at: string
+  comments: number
   user: {
     login: string
   }
 }
 
+const username = Environment.GITHUB_USERNAME
+const repository = Environment.GITHUB_REPOSITORY
 export function Posts() {
-  const params = useParams()
-  const [post, setPost] = useState<PostProps>({} as PostProps)
+  const { id } = useParams()
+
+  const [information, setInformation] = useState<PostData>({} as PostData)
 
   const getPost = useCallback(async () => {
     const response = await api.get(
-      `repos/manuncorrea/github-blog/issues/${params.number}`,
+      `repos/${username}/${repository}/issues/${id}`,
     )
-
-    setPost(response.data)
-  }, [params.number])
+    setInformation(response.data)
+  }, [id])
 
   useEffect(() => {
     getPost()
-  }, [getPost])
+  }, [])
 
-  console.log(post)
+  console.log(information)
 
   return (
     <>
       <div className="container">
-        <PostInfo post={post} />
+        <PostInfo post={information} />
       </div>
 
       <ProfileContainer className="container">
-        <ReactMarkdown>{post.body}</ReactMarkdown>
+        <ReactMarkdown>{information.body}</ReactMarkdown>
       </ProfileContainer>
     </>
   )

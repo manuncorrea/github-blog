@@ -25,6 +25,7 @@ export const ProfileContainer = styled.div`
   }
 
   code {
+    font-size: 0.75rem;
     line-height: 1.6;
     margin: 2.5rem 0;
     background: ${(props) => props.theme['base-post']};

@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const PostHomeContainer = styled.button`
+export const PostHomeContainer = styled(Link)`
   width: 100%;
   max-width: 26rem;
   height: 16.25rem;
@@ -13,6 +14,7 @@ export const PostHomeContainer = styled.button`
   text-align: left;
 
   padding: 2rem;
+  text-decoration: none;
 
   background: ${(props) => props.theme['base-post']};
   border-radius: 10px;

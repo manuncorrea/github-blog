@@ -28,7 +28,7 @@ export function Home() {
   return (
     <div className="container">
       <Profolie />
-      <SearchFomr />
+      <SearchFomr getPosts={getPosts} />
       <PostContent>
         {posts.map((post) => {
           return <PostPreviewHome key={post.number} posts={post} />
